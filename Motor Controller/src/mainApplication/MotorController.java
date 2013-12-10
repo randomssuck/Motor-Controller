@@ -106,7 +106,7 @@ public class MotorController extends JApplet {
 			public void run() {
 			JFrame frame = new MainFrame("Arduino Motor Program"); 
 			frame.setMinimumSize(new Dimension(400, 600)); // Initialize Frameframe.setSize(400, 600); // Set Frame Size
-			frame.setResizable(false);
+			frame.setResizable(True);
 			frame.setLocationRelativeTo(null); // Place Frame in Middle of Screen
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set Default Close
 			frame.setVisible(true); // Set Visible
