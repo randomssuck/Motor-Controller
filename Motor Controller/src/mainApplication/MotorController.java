@@ -109,7 +109,7 @@ public class MotorController extends JApplet {
 			frame.setResizable(true);
 			frame.setLocationRelativeTo(null); // Place Frame in Middle of Screen
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set Default Close
-			frame.setVisible(false); // Set Visible
+			frame.setVisible(true); // Set Visible
 			}
 		});
 	}
