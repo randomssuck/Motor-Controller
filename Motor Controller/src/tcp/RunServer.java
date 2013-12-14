@@ -9,4 +9,3 @@ public class RunServer {
 		frame.startRunning();
 	}
 }
-hello
