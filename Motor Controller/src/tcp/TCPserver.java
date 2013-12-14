@@ -1,12 +1,23 @@
 package tcp;
 
-import java.io.*;
-import java.net.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class TCPserver extends JFrame {
+	private static final long serialVersionUID = 1L;
 	
 	private JTextField userText;
 	private JTextArea chatWindow;
@@ -16,7 +27,7 @@ public class TCPserver extends JFrame {
 	private Socket connection;
 	
 	public TCPserver() {
-		super("IM");
+		super("Server Instant Messenger");
 		userText = new JTextField();
 		userText.setEditable(false);
 		userText.addActionListener(
@@ -59,12 +70,66 @@ public class TCPserver extends JFrame {
 		showMessage(" Now connected to " + connection.getInetAddress().getHostName());
 	}
 	
-	private void setipStreams() throws IOException {
+	private void setupStreams() throws IOException {
 		output = new ObjectOutputStream(connection.getOutputStream());
 		output.flush();
 		input = new ObjectInputStream(connection.getInputStream());
 		showMessage("\n Streams are now setup! \n");
-		
-		//thenewboston ep.42 intermediate
+	}
+	
+	private void whileChatting() throws IOException {
+		String message = " You are now connected! ";
+		sendMessage(message);
+		ableToType(true);
+		do {
+			try {
+				message = (String) input.readObject();
+				showMessage("\n" +  message);
+			}catch(ClassNotFoundException classNotFoundException) {
+				showMessage("\n idk wtf that user sent! ");
+			}
+		}while(!message.equals("CLIENT - END"));
+	}
+	
+	private void closeCrap() {
+		showMessage("\n Closing connection... \n");
+		ableToType(false);
+		try {
+			output.close();
+			input.close();
+			connection.close();
+		}catch(IOException ioException){
+			ioException.printStackTrace();
+		}
+	}
+	
+	private void sendMessage(String message) {
+		try {
+			output.writeObject("SERVER - " + message);
+			output.flush();
+			showMessage("\nServer -" + message);
+		}catch(IOException ioException) {
+			chatWindow.append("\n CAN'T SEND");
+		}
+	}
+	
+	private void showMessage(final String text) {
+		SwingUtilities.invokeLater(
+			new Runnable() {
+				public void run() {
+					chatWindow.append(text);
+				}
+			}
+		);
+	}
+	
+	private void ableToType(final boolean toggle) {
+		SwingUtilities.invokeLater(
+			new Runnable() {
+				public void run() {
+					userText.setEditable(toggle);
+				}
+			}
+		);
 	}
 }
