@@ -39,14 +39,16 @@ public class TCPclient extends JFrame {
 			}
 		});
 		add(userText, BorderLayout.NORTH);
+		
 		chatWindow = new JTextArea();
 		chatWindow.setEditable(false);
 		add(new JScrollPane(chatWindow), BorderLayout.CENTER);
+		
 		setSize(400,300);
 		setVisible(true);
 	}
 	
-	public void  startRunning() {
+	public void startRunning() {
 		try {
 			connectToServer();
 			setupStreams();

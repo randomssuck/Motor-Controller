@@ -54,7 +54,7 @@ public class TCPserver extends JFrame {
 					setupStreams();
 					whileChatting();
 				}catch(EOFException eofException) {
-					showMessage("\nServer ended the connection!");
+					showMessage("\nServer ended the connection!\n");
 				}finally {
 					closeCrap();
 				}
@@ -65,7 +65,7 @@ public class TCPserver extends JFrame {
 	}
 	
 	private void waitForConnection() throws IOException {
-		showMessage("Waiting for someone to connect... \n");
+		showMessage("Waiting for someone to connect...\n");
 		connection = server.accept();
 		showMessage("Now connected to " + connection.getInetAddress().getHostName());
 	}
@@ -98,6 +98,7 @@ public class TCPserver extends JFrame {
 			output.close();
 			input.close();
 			connection.close();
+			chatWindow.setText("");
 		}catch(IOException ioException){
 			ioException.printStackTrace();
 		}

@@ -13,7 +13,15 @@ import javax.swing.JTextField;
 
 public class ConnectPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-
+	
+	private JLabel hostIP;
+	private JLabel port;
+	private JTextField hostField;
+	private JTextField portField;
+	private JButton connect;
+	private JButton save;
+	private JComboBox<String> load;
+	
 	public ConnectPanel() {
 		Dimension size = getPreferredSize();
 		size.height = 109;
@@ -22,20 +30,12 @@ public class ConnectPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		
-		JLabel hostip;
-		JLabel port;
-		JTextField hostfield;
-		JTextField portfield;
-		JButton connect;
-		JButton save;
-		JComboBox<String> load;
-		
-		hostip = new JLabel("Host IP: ");
-		hostip.setToolTipText("Enter Decive IP Address");
+		hostIP = new JLabel("Host IP: ");
+		hostIP.setToolTipText("Enter Decive IP Address");
 		gc.anchor = GridBagConstraints.EAST;
 		gc.gridx = 0;
 		gc.gridy = 0;
-		add(hostip, gc);
+		add(hostIP, gc);
 		
 		port = new JLabel("Port: ");
 		port.setToolTipText("Enter Device Port");
@@ -44,15 +44,15 @@ public class ConnectPanel extends JPanel {
 		gc.gridy = 1;
 		add(port, gc);
 		
-		hostfield = new JTextField(15);
+		hostField = new JTextField(15);
 		gc.gridx = 1;
 		gc.gridy = 0;
-		add(hostfield, gc);
+		add(hostField, gc);
 		
-		portfield = new JTextField(15);
+		portField = new JTextField(15);
 		gc.gridx = 1;
 		gc.gridy = 1;
-		add(portfield, gc);
+		add(portField, gc);
 		
 		connect = new JButton("Connect");
 		connect.setToolTipText("Connect/Disconnect to Device");
@@ -80,6 +80,5 @@ public class ConnectPanel extends JPanel {
 		gc.gridx = 1;
 		gc.gridy = 2;
 		add(load, gc);
-		
 	}
 }

@@ -3,6 +3,9 @@ package mainApplication;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,6 +17,15 @@ import javax.swing.JTextField;
 public class ConsolePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	public JTextArea consoleArea;
+	public JTextField userInput;
+	public JButton sendBtn;
+	public String message = "";
+	public String serverIP;
+	public Socket connection;
+	public ObjectOutputStream output;
+	public ObjectInputStream input;
+	
 	public ConsolePanel() {
 		Dimension size = getPreferredSize();
 		size.height = 140;
@@ -22,12 +34,8 @@ public class ConsolePanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		
-		JTextArea consoleArea;
-		JTextField sendField;
-		JButton sendBtn;
-		
 		consoleArea = new JTextArea(5, 20);
-		consoleArea.setLineWrap(true);
+		consoleArea.setLineWrap(false);
 		consoleArea.setEditable(false);
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.anchor = GridBagConstraints.NORTH;
@@ -40,15 +48,16 @@ public class ConsolePanel extends JPanel {
 	       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), gc);
 		
 		// Send Field
-		sendField = new JTextField(10);
-		sendField.setEnabled(false);
+		userInput = new JTextField(10);
+		userInput.setEnabled(false);
+		
 		gc.anchor = GridBagConstraints.WEST;
 		gc.ipadx = 295;
 	    gc.ipady = 0;
 	    gc.gridwidth = 1;
 	    gc.gridx = 0;
 	    gc.gridy = 1;
-		add(sendField, gc);
+		add(userInput, gc);
 		
 		// Send Button
 		sendBtn = new JButton("Send");
@@ -57,10 +66,8 @@ public class ConsolePanel extends JPanel {
 	    gc.gridx = 1;
 	    gc.gridy = 1;
 		add(sendBtn, gc);
-		
 
-		Handler handler = new Handler();
-		sendField.addActionListener(handler);
-		sendBtn.addActionListener(handler);
+		//startConsole();
 	}
+	
 }
