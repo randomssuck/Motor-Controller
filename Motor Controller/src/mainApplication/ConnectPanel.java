@@ -1,6 +1,5 @@
 package mainApplication;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -23,9 +22,6 @@ public class ConnectPanel extends JPanel {
 	private JComboBox<String> load;
 	
 	public ConnectPanel() {
-		Dimension size = getPreferredSize();
-		size.height = 109;
-		setPreferredSize(size);
 		setBorder(BorderFactory.createTitledBorder("Vehicle"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();

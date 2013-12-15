@@ -1,6 +1,5 @@
 package mainApplication;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,9 +12,6 @@ public class ControlPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	public ControlPanel() {
-		Dimension size = getPreferredSize();
-		size.height = 200;
-		setPreferredSize(size);
 		setBorder(BorderFactory.createTitledBorder("Motor Controls"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -30,8 +26,8 @@ public class ControlPanel extends JPanel {
 		forwardBtn.setEnabled(false);
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.anchor = GridBagConstraints.NORTH;
-		gc.insets = new Insets(0,0,0,2);
-		gc.ipadx = 28;
+		gc.insets = new Insets(2,0,0,2);
+		gc.ipadx = 16;
 		gc.ipady = 65;
 		gc.gridwidth = 3;
 		gc.gridx = 0;
@@ -40,12 +36,14 @@ public class ControlPanel extends JPanel {
 		
 		reverseBtn = new JToggleButton("Reverse");
 		reverseBtn.setEnabled(false);
+		gc.insets = new Insets(2,0,6,2);
 		gc.gridx = 0;
 		gc.gridy = 2;
 		add(reverseBtn, gc);
 		
 		rightBtn = new JToggleButton("Curve Right");
-		rightBtn.setEnabled(true);
+		rightBtn.setEnabled(false);
+		gc.insets = new Insets(2,0,0,2);
 		gc.gridwidth = 1;
 		gc.gridx = 2;
 		gc.gridy = 1;
@@ -69,7 +67,5 @@ public class ControlPanel extends JPanel {
 		rightBtn.addActionListener(handler);
 		leftBtn.addActionListener(handler);
 		stopBtn.addActionListener(handler);
-		
-		
 	}
 }

@@ -111,6 +111,7 @@ public class TCPserver extends JFrame {
 			showMessage("\nSERVER: " + message);
 		}catch(IOException ioException) {
 			chatWindow.append("\nCAN'T SEND");
+			startRunning();
 		}
 	}
 	
