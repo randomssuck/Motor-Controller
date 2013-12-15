@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ConnectPanel extends JPanel {
+public class VehicalLogin extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel hostIP;
@@ -21,7 +21,7 @@ public class ConnectPanel extends JPanel {
 	private JButton save;
 	private JComboBox<String> load;
 	
-	public ConnectPanel() {
+	public VehicalLogin() {
 		setBorder(BorderFactory.createTitledBorder("Vehicle"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();

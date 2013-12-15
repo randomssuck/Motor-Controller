@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ConsolePanel extends JPanel {
+public class Console extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	public JTextArea consoleArea;
@@ -26,7 +26,7 @@ public class ConsolePanel extends JPanel {
 	public ObjectOutputStream output;
 	public ObjectInputStream input;
 	
-	public ConsolePanel() {
+	public Console() {
 		Dimension size = getPreferredSize();
 		size.height = 140;
 		setPreferredSize(size);

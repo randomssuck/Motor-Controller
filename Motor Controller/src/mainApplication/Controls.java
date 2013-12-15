@@ -8,10 +8,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-public class ControlPanel extends JPanel {
+public class Controls extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	public ControlPanel() {
+	public Controls() {
 		setBorder(BorderFactory.createTitledBorder("Motor Controls"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();

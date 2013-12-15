@@ -51,8 +51,8 @@ public class MainFrame extends JFrame {
 	    
         
 		// Initialize Panels
-		ConnectPanel connectPanel;
-		ControlPanel controlPanel;
+		VehicalLogin connectPanel;
+		Controls controlPanel;
 		//ConsolePanel consolePanel;
 		
 		// Set Frame Layout
@@ -60,14 +60,14 @@ public class MainFrame extends JFrame {
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		// Add Connection Panel
-		connectPanel = new ConnectPanel();
+		connectPanel = new VehicalLogin();
 		gc.ipady = 0;
 		gc.gridy = 0;
 		gc.anchor = GridBagConstraints.NORTH;
 		add(connectPanel, gc);
 		
 		// Add Control Panel
-		controlPanel = new ControlPanel();
+		controlPanel = new Controls();
 		gc.ipadx = 10;
 		gc.gridy = 1;
 		gc.anchor = GridBagConstraints.SOUTH;

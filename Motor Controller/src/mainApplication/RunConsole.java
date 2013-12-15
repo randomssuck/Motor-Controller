@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class RunConsole extends ConsolePanel implements Runnable{
+public class RunConsole extends Console implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
 
