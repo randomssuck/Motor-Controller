@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class RunConsole extends Console implements Runnable{
+public class RunConsole extends ConsoleTab implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,9 @@ public class RunConsole extends Console implements Runnable{
 			try {
 				message = (String) input.readObject();
 				//displayMessage("\n" + message);
-			}catch(ClassNotFoundException classNotFoundException){}
+			}catch(ClassNotFoundException classNotFoundException){
+				
+			}
 		}while(!message.equals("SERVER: END"));
 	}
 	

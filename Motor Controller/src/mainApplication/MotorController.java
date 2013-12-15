@@ -13,7 +13,7 @@ public class MotorController implements Runnable {
 	
 	public void run() {
 		JFrame frame = new MainFrame("Arduino Motor Program");
-		frame.setSize(new Dimension(400, 500)); // Initialize Frameframe.setSize(400, 600); // Set Frame Size
+		frame.setMinimumSize( new Dimension(400, 500));
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null); // Place Frame in Middle of Screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set Default Close
