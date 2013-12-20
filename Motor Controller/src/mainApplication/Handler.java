@@ -47,8 +47,10 @@ public class Handler implements ActionListener {
 		else if (event.getActionCommand() == "Stop")
 			string=String.format("Clicked: %s", event.getActionCommand());
 		
-		else if (event.getActionCommand() == "sendField")
-			string=String.format("Clicked: %s", event.getActionCommand());
+		else if (event.getActionCommand() == "userInput")
+			RunConsole.sendMessage();
+			sendMessage(event.getActionCommand());
+			userInput.setText("");
 			
 		else if (event.getActionCommand() == "Send")
 			string=String.format("Clicked: %s", event.getActionCommand());

@@ -6,6 +6,7 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 public class Controls extends JPanel {
@@ -21,6 +22,7 @@ public class Controls extends JPanel {
 		JToggleButton rightBtn;
 		JToggleButton leftBtn;
 		JToggleButton stopBtn;
+		JTextField sBar;
 		
 		forwardBtn = new JToggleButton("Forward");
 		forwardBtn.setEnabled(false);
@@ -61,6 +63,15 @@ public class Controls extends JPanel {
 		gc.gridy = 1;
 		add(stopBtn, gc);
 		
+		sBar = new JTextField("Ready");
+		sBar.setEditable(false);
+		gc.gridx = 0;
+		gc.gridy = 3;
+		gc.gridwidth = 3;
+		gc.ipady = 0;
+		add(sBar, gc);
+		
+		// Event Handling
 		Handler handler = new Handler();
 		forwardBtn.addActionListener(handler);
 		reverseBtn.addActionListener(handler);

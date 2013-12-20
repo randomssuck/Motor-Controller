@@ -2,6 +2,7 @@ package mainApplication;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -31,28 +32,30 @@ public class ConsoleTab extends JPanel {
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		consoleArea = new JTextArea();
-		consoleArea.setLineWrap(false);
+		//consoleArea.setLineWrap(false);
 		consoleArea.setEditable(false);
 	    gc.anchor = GridBagConstraints.CENTER;
-	    gc.ipadx = 352;
-	    gc.ipady = 355;
+	    gc.insets = new Insets(2,0,0,0);
+	    gc.ipadx = 353;
+	    gc.ipady = 380;
 	    gc.gridx = 0;
 	    gc.gridy = 0;
+	    gc.weighty = 0.0;
 	    add(new JScrollPane(consoleArea,
 	       JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), gc);
 		
 		// Send Field
 		userInput = new JTextField();
-		userInput.setEnabled(false);
+		userInput.setEnabled(true);
+		userInput.addActionListener(new Handler());
 		
 		gc.anchor = GridBagConstraints.SOUTH;
+		//gc.insets = new Insets(2,2,2,2);
 	    gc.ipady = 0;
 	    gc.gridx = 0;
 	    gc.gridy = 1;
+	    gc.weighty = 1.0;
 		add(userInput, gc);
-		
-		//startConsole();
 	}
-	
 }

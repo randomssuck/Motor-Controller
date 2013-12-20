@@ -1,7 +1,5 @@
 package mainApplication;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,20 +9,16 @@ import java.net.Socket;
 
 public class RunConsole extends ConsoleTab implements Runnable{
 	
+	
 	private static final long serialVersionUID = 1L;
 
 	public RunConsole(String host) {
 		serverIP = host;
-		userInput.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				sendMessage(event.getActionCommand());
-				userInput.setText("");
-			}
-		});
-
+		
+		
 	/*	startConsole();	*/}
 
-	public void startConsole() {
+	public void run() {
 		try {
 			connectToServer();
 			setupStreams();
@@ -32,7 +26,7 @@ public class RunConsole extends ConsoleTab implements Runnable{
 		}catch(EOFException eofException){
 		//	displayMessage("\nClient ended connection");
 		}catch(IOException ioException){
-			ioException.printStackTrace();
+			//ioException.printStackTrace();
 		}finally{
 			cleanUp();
 		}
@@ -42,24 +36,28 @@ public class RunConsole extends ConsoleTab implements Runnable{
 		try {
 			//displayMessage("Attempting to connect...\n");
 			connection = new Socket(InetAddress.getByName(serverIP), 6789);
-			//displayMessage("Connected to: " + connection.getInetAddress().getHostName());
+			displayMessage("Connected to: " + connection.getInetAddress().getHostName());
 		}catch(IOException ioException){
 			//displayMessage("\nNo server found!");
 		}
 	}
 	
-	private void setupStreams() throws IOException{
-		output = new ObjectOutputStream(connection.getOutputStream());
-		output.flush();
-		input = new ObjectInputStream(connection.getInputStream());
-		//displayMessage("\nStreams are created\n");
+	private void setupStreams() {
+		try {
+			output = new ObjectOutputStream(connection.getOutputStream());
+			output.flush();
+			input = new ObjectInputStream(connection.getInputStream());
+			//displayMessage("\nStreams are created\n");
+		}catch(IOException ioException){
+		//displayMessage("\nNo server found!");
+		}
 	}
 	
 	private void whileChatting() throws IOException {
 		do {
 			try {
 				message = (String) input.readObject();
-				//displayMessage("\n" + message);
+				displayMessage("\n" + message);
 			}catch(ClassNotFoundException classNotFoundException){
 				
 			}
@@ -73,33 +71,23 @@ public class RunConsole extends ConsoleTab implements Runnable{
 			input.close();
 			connection.close();
 		}catch(IOException ioException){
-			ioException.printStackTrace();
+			//ioException.printStackTrace();
 		}
 	}
 	
-	private void sendMessage(String message) {
+	public void sendMessage(String message) {
 		try {
 			output.writeObject("CLIENT: " + message);
 			output.flush();
-			//displayMessage("\nCLIENT: " + message);
+			displayMessage("\nCLIENT: " + message);
 		}catch(IOException ioException){
 			consoleArea.append("\nFailed to send!");
 		}
 	}
-
-
-	public void run() {
-		
-		try {
-			connectToServer();
-			setupStreams();
-			whileChatting();
-		}catch(EOFException eofException){
-		//	displayMessage("\nClient ended connection");
-		}catch(IOException ioException){
-			ioException.printStackTrace();
-		}finally{
-			cleanUp();
-		}
+	
+	private void displayMessage(final String message) {
+		System.out.println(message);
 	}
+
+	
 }
