@@ -69,7 +69,7 @@ public class VehicalLogin extends JPanel {
 				String address = ip + ":" + inPort;
 				int port = 0;
 				int intport;
-					if(connectBtn.getText().toString().equals(" Connect ")) {
+					if(connectBtn.getText().toString().equals(" Connect ") && TCPconnection.isAlive()) {
 						if(!(ip.equals(""))) {
 							try{
 								if(!(inPort.equals(""))) {
