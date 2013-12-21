@@ -3,12 +3,8 @@ package mainApplication;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,14 +13,8 @@ import javax.swing.JTextField;
 public class ConsoleTab extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	public JTextArea consoleArea;
-	public JTextField userInput;
-	public JButton sendBtn;
-	public String message = "";
-	public String serverIP;
-	public Socket connection;
-	public ObjectOutputStream output;
-	public ObjectInputStream input;
+	private JTextArea consoleArea;
+	private JTextField userInput;
 	
 	public ConsoleTab() {
 		setBorder(BorderFactory.createTitledBorder("Console"));
@@ -48,10 +38,9 @@ public class ConsoleTab extends JPanel {
 		// Send Field
 		userInput = new JTextField();
 		userInput.setEnabled(true);
-		userInput.addActionListener(new Handler());
+		userInput.addActionListener(new EventHandler());
 		
 		gc.anchor = GridBagConstraints.SOUTH;
-		//gc.insets = new Insets(2,2,2,2);
 	    gc.ipady = 0;
 	    gc.gridx = 0;
 	    gc.gridy = 1;

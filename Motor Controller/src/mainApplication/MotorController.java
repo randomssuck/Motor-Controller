@@ -8,7 +8,6 @@ public class MotorController implements Runnable {
 
 	public static void main(String[] args) {
 		(new Thread(new MotorController())).start();
-		(new Thread(new RunConsole("127.0.0.1"))).start();
 	}
 	
 	public void run() {

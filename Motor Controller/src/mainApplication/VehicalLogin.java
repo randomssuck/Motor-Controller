@@ -2,6 +2,8 @@ package mainApplication;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,18 +15,21 @@ import javax.swing.JTextField;
 public class VehicalLogin extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel hostIP;
-	private JLabel port;
-	private JTextField hostField;
-	private JTextField portField;
-	private JButton connect;
-	private JButton save;
-	private JComboBox<String> load;
+	JLabel hostIP;
+	JLabel port;
+	final JTextField hostField;
+	final JTextField portField;
+	final JButton connectBtn;
+	JButton saveBtn;
+	JComboBox<String> loadComboBox;
 	
 	public VehicalLogin() {
 		setBorder(BorderFactory.createTitledBorder("Vehicle"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
+
+		
+		
 		
 		hostIP = new JLabel("Host IP: ");
 		hostIP.setToolTipText("Enter Decive IP Address");
@@ -41,6 +46,8 @@ public class VehicalLogin extends JPanel {
 		add(port, gc);
 		
 		hostField = new JTextField(15);
+		gc.weightx = 0.5;
+		gc.ipadx = 165;
 		gc.gridx = 1;
 		gc.gridy = 0;
 		add(hostField, gc);
@@ -50,31 +57,93 @@ public class VehicalLogin extends JPanel {
 		gc.gridy = 1;
 		add(portField, gc);
 		
-		connect = new JButton("Connect");
-		connect.setToolTipText("Connect/Disconnect to Device");
-		connect.setEnabled(false);
+		connectBtn = new JButton(" Connect ");
+		connectBtn.setToolTipText("Connect/Disconnect to Device");
+		connectBtn.setEnabled(true);
+		connectBtn.setFocusable(false);
+		connectBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				usableComponentes(false);
+				String ip = hostField.getText();
+				String inPort = portField.getText();
+				String address = ip + ":" + inPort;
+				int port = 0;
+				int intport;
+					if(connectBtn.getText().toString().equals(" Connect ")) {
+						if(!(ip.equals(""))) {
+							try{
+								if(!(inPort.equals(""))) {
+									intport = Integer.parseInt(inPort);
+									port = intport;
+									(new Thread(new TCPconnection(ip, port))).start();
+								}else{
+									System.out.println("Port field can not be empty!");
+									System.out.println("Entered address ( " + address + " )");
+									usableComponentes(true);
+								}
+							}catch(NumberFormatException nFE){
+								System.out.println("Port is not an Integer!");
+								System.out.println("Entered address ( " + address + " )");
+								usableComponentes(true);
+							}
+						}else{
+							System.out.println("Host IP field can not be empty!");
+							System.out.println("Entered address ( " + address + " )");
+							usableComponentes(true);
+						}
+					}else if(connectBtn.getText().toString().equals("Disconnect")){
+						TCPconnection.sendMessage("END");
+						usableComponentes(true);
+					}
+			}
+		});
 		gc.fill = GridBagConstraints.VERTICAL;
 		gc.anchor = GridBagConstraints.NORTH;
 		gc.gridheight = 2;
+		gc.weightx = 0.0;
+		gc.ipadx = 0;
 		gc.gridx = 2;
 		gc.gridy = 0;
-		add(connect, gc);
+		add(connectBtn, gc);
 		
-		save = new JButton("Save");
-		save.setToolTipText("Save Current Device");
-		save.setEnabled(false);
+		saveBtn = new JButton("Save");
+		saveBtn.setFocusable(false);
+		saveBtn.setToolTipText("Save Current Host Address");
+		saveBtn.setEnabled(true);
+		saveBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		gc.gridheight = 1;
 		gc.gridx = 0;
 		gc.gridy = 2;
-		add(save, gc);
+		add(saveBtn, gc);
 		
 		String[] hostSaves = {"---------- Load Save ----------"};
-		load = new JComboBox<>(hostSaves);
+		loadComboBox = new JComboBox<>(hostSaves);
+		loadComboBox.setFocusable(false);
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.anchor = GridBagConstraints.WEST;
 		gc.gridwidth = 3;
 		gc.gridx = 1;
 		gc.gridy = 2;
-		add(load, gc);
+		add(loadComboBox, gc);
+	}
+	
+	private void usableComponentes(boolean s) {
+		if(s == true) {
+			hostField.setEditable(true);
+			hostField.setFocusable(true);
+			portField.setEditable(true);
+			portField.setFocusable(true);
+			connectBtn.setText(" Connnect ");
+		}else{
+			hostField.setEditable(false);
+			hostField.setFocusable(false);
+			portField.setEditable(false);
+			portField.setFocusable(false);
+			connectBtn.setText("Disconnect");
+		}
 	}
 }

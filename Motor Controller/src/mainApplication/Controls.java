@@ -72,7 +72,7 @@ public class Controls extends JPanel {
 		add(sBar, gc);
 		
 		// Event Handling
-		Handler handler = new Handler();
+		EventHandler handler = new EventHandler();
 		forwardBtn.addActionListener(handler);
 		reverseBtn.addActionListener(handler);
 		rightBtn.addActionListener(handler);

@@ -10,14 +10,9 @@ public class MainFrame extends JFrame {
 	public MainFrame(String title) {
 		super(title);
 		
-		
 	        JTabbedPane tabbedPane = new JTabbedPane();
 	        
-	         
-	        //JComponent panel1 = makeTextPanel("Panel #1");
-	        
 	        ControllerTab controlTab = new ControllerTab();
-	        
 	        tabbedPane.addTab("Controller", controlTab);
 	         
 	        ConsoleTab consoleTab = new ConsoleTab();
@@ -26,11 +21,10 @@ public class MainFrame extends JFrame {
 	        ExtraTab extraTab = new ExtraTab();
 	        tabbedPane.addTab("Extras", extraTab);
 	        
-	        //Add the tabbed pane to this panel.
+	        //Add the tab pane to this panel.
 	        add(tabbedPane);
 	        
 	        //The following line enables to use scrolling tabs.
 	        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
-	
 }

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-public class Handler implements ActionListener {
+public class EventHandler implements ActionListener {
 
 	public void actionPerformed(ActionEvent event) {
 		
@@ -47,13 +47,12 @@ public class Handler implements ActionListener {
 		else if (event.getActionCommand() == "Stop")
 			string=String.format("Clicked: %s", event.getActionCommand());
 		
-		else if (event.getActionCommand() == "userInput")
+		/*else if (event.getActionCommand() == "userInput")
 			RunConsole.sendMessage();
 			sendMessage(event.getActionCommand());
-			userInput.setText("");
+			userInput.setText("");*/
 			
-		else if (event.getActionCommand() == "Send")
-			string=String.format("Clicked: %s", event.getActionCommand());
+		
 		
 		JOptionPane.showMessageDialog(null, string);
 
