@@ -15,10 +15,8 @@ public class TCPconnection implements Runnable{
 	private static Socket connection;
 	private static ObjectOutputStream output;
 	private static ObjectInputStream input;
-	private static boolean connected;
 	
 	public TCPconnection(String ip, int port) {
-		
 		serverIP = ip;
 		serverPort = port;
 	}
@@ -29,7 +27,8 @@ public class TCPconnection implements Runnable{
 			setupStreams();
 			whileChatting();
 		}catch(EOFException eofException){
-			displayMessage("\nClient ended connection");
+			Controls.sBar.setText("");
+			displayMessage(" [~] Client ended connection", 5);
 		}catch(IOException ioException){
 		}catch(NullPointerException nullPointerException){
 		}finally{
@@ -39,33 +38,23 @@ public class TCPconnection implements Runnable{
 	
 	private void connectToServer() {
 		try {
-			displayMessage("Attempting to connect...\n");
+			Controls.sBar.setText("");
+			displayMessage(" [~] Attempting to connect...", 5);
 			connection = new Socket(InetAddress.getByName(serverIP), serverPort);
-			displayMessage("Connected to: " + connection.getInetAddress().getHostName());
+			displayMessage("Connected to: " + connection.getInetAddress().getHostName(), 2);
 			VehicalLogin.connectedGUIstate(true);
+			Controls.controlsEnabled(true);
 		}catch(IOException ioException){
-			setConnected(false);
-			displayMessage("Server not found!");
+			displayMessage("Server not found!", 0);
 		}
 	}
 	
-	public static boolean isConnected() {
-		return connected;
-	}
-
-	public static void setConnected(boolean connected) {
-		TCPconnection.connected = connected;
-	}
-
 	private void setupStreams() {
 		try {
 			output = new ObjectOutputStream(connection.getOutputStream());
 			output.flush();
 			input = new ObjectInputStream(connection.getInputStream());
-			setConnected(true);
-			displayMessage("Streams are created\n");
 		}catch(IOException ioException){
-			displayMessage("Server not found!");
 		}
 	}
 	
@@ -73,23 +62,24 @@ public class TCPconnection implements Runnable{
 		do {
 			try {
 				message = (String) input.readObject();
-				displayMessage("\n" + message);
+				displayMessage(message, 2);
 			}catch(ClassNotFoundException classNotFoundException){
-				
+				displayMessage("Unable to read message", 4);
 			}
 		}while(!message.equals("SERVER: END"));
 	}
 	
 	public final void cleanUp() {
-		displayMessage("\nClosing sockets...");
 		try {
+			displayMessage("Closing sockets...", 1);
 			output.close();
 			input.close();
 			connection.close();
-			displayMessage("Successfully closed sockets.");
+			Controls.controlsEnabled(false);
+			displayMessage("Successfully closed sockets.", 0);
 		}catch(IOException ioException){
 		}catch(NullPointerException nullPointerException){
-			displayMessage("Closed sockets because client could not connect to server.\n");
+			VehicalLogin.connectBtn.setSelected(false);
 		}
 	}
 	
@@ -101,14 +91,15 @@ public class TCPconnection implements Runnable{
 			}else{
 				output.writeObject("CLIENT: " + message);
 				output.flush();
-				displayMessage("\nCLIENT: " + message);
+				displayMessage("CLIENT: " + message, 2);
 			}
 		}catch(IOException ioException){
-			displayMessage("\nFailed to send!");
+			//displayMessage("Failed to send!", 4);
 		}
 	}
 	
-	public static void displayMessage(final String message) {
+	public static void displayMessage(final String message, int connectionState) {
 		System.out.println(message);
+		Controls.statusBarUpdate(message, connectionState);
 	}
 }

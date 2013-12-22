@@ -54,9 +54,10 @@ public class TCPserver extends JFrame {
 					setupStreams();
 					whileChatting();
 				}catch(EOFException eofException) {
-					showMessage("\nServer ended the connection!\n");
+					showMessage("Server ended the connection!");
 				}finally {
 					closeCrap();
+					chatWindow.setText("");
 				}
 			}
 		}catch(IOException ioException) {
@@ -65,7 +66,7 @@ public class TCPserver extends JFrame {
 	}
 	
 	private void waitForConnection() throws IOException {
-		showMessage("Waiting for someone to connect...\n");
+		showMessage("Waiting for someone to connect...");
 		connection = server.accept();
 		showMessage("Now connected to " + connection.getInetAddress().getHostName());
 	}
@@ -74,31 +75,30 @@ public class TCPserver extends JFrame {
 		output = new ObjectOutputStream(connection.getOutputStream());
 		output.flush();
 		input = new ObjectInputStream(connection.getInputStream());
-		showMessage("\nStreams are now setup! \n");
+		showMessage("Streams are now setup!");
 	}
 	
 	private void whileChatting() throws IOException {
-		String message = "CONNECTED TO CLIENT";
-		sendMessage(message);
+		String message = null;
+		//sendMessage(message);
 		ableToType(true);
 		do {
 			try {
 				message = (String) input.readObject();
-				showMessage("\n" +  message);
+				showMessage(message);
 			}catch(ClassNotFoundException classNotFoundException) {
-				showMessage("\n idk wtf that user sent! ");
+				showMessage("idk wtf that user sent! ");
 			}
 		}while(!message.equals("CLIENT: END"));
 	}
 	
 	private void closeCrap() {
-		showMessage("\nClosing connection... \n");
+		showMessage("Closing connection...");
 		ableToType(false);
 		try {
 			output.close();
 			input.close();
 			connection.close();
-			chatWindow.setText("");
 		}catch(IOException ioException){
 			ioException.printStackTrace();
 		}
@@ -108,9 +108,9 @@ public class TCPserver extends JFrame {
 		try {
 			output.writeObject("SERVER: " + message);
 			output.flush();
-			showMessage("\nSERVER: " + message);
+			showMessage("SERVER: " + message);
 		}catch(IOException ioException) {
-			chatWindow.append("\nCAN'T SEND");
+			chatWindow.append("CAN'T SEND");
 			startRunning();
 		}
 	}
@@ -118,7 +118,7 @@ public class TCPserver extends JFrame {
 	private void showMessage(final String text) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				chatWindow.append(text);
+				chatWindow.append("\n" + text);
 			}
 		});
 	}

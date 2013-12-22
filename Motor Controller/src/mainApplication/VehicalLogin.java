@@ -22,7 +22,7 @@ public class VehicalLogin extends JPanel {
 	private JLabel port;
 	private static JTextField hostField;
 	private static JTextField portField;
-	private static JToggleButton connectBtn;
+	public static JToggleButton connectBtn;
 	private JButton saveBtn;
 	private JComboBox<String> loadComboBox;
 	
@@ -83,7 +83,7 @@ public class VehicalLogin extends JPanel {
 								connectBtn.doClick();
 							}
 						}catch(NumberFormatException nFE){
-							System.out.println("Port is not an Integer!");
+							displayMessage("Port is not an Integer!", 0);
 							System.out.println("Entered address ( " + address + " )\n");
 							connectBtn.setSelected(true);
 							connectBtn.doClick();
@@ -151,5 +151,9 @@ public class VehicalLogin extends JPanel {
 			portField.setFocusable(true);
 			connectBtn.setText("Connect");
 		}
+	}
+	
+	private void displayMessage (String message, int connectionState) {
+		Controls.statusBarUpdate(message, connectionState);
 	}
 }

@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 public class ConsoleTab extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private JTextArea consoleArea;
+	public static JTextArea consoleArea;
 	private JTextField userInput;
 	
 	public ConsoleTab() {
@@ -38,7 +38,7 @@ public class ConsoleTab extends JPanel {
 		// Send Field
 		userInput = new JTextField();
 		userInput.setEnabled(true);
-		userInput.addActionListener(new EventHandler());
+		//userInput.addActionListener(new EventHandler());
 		
 		gc.anchor = GridBagConstraints.SOUTH;
 	    gc.ipady = 0;
