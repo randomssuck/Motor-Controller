@@ -1,13 +1,13 @@
-package mainApplication;
+package controllerApplication;
 
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-public class MotorController implements Runnable {
+public class ControllerApplication implements Runnable {
 
 	public static void main(String[] args) {
-		(new Thread(new MotorController())).start();
+		(new Thread(new ControllerApplication())).start();
 	}
 	
 	public void run() {

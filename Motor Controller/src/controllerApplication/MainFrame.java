@@ -1,7 +1,11 @@
-package mainApplication;
+package controllerApplication;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+
+import panelConsole.PanelConsole;
+import panelController.PanelController;
+import panelExtras.PanelExtras;
 
 public class MainFrame extends JFrame {
 	
@@ -12,13 +16,13 @@ public class MainFrame extends JFrame {
 		
 	        JTabbedPane tabbedPane = new JTabbedPane();
 	        
-	        ControllerTab controlTab = new ControllerTab();
+	        PanelController controlTab = new PanelController();
 	        tabbedPane.addTab("Controller", controlTab);
 	         
-	        ConsoleTab consoleTab = new ConsoleTab();
+	        PanelConsole consoleTab = new PanelConsole();
 	        tabbedPane.addTab("Console", consoleTab);
 	        
-	        ExtraTab extraTab = new ExtraTab();
+	        PanelExtras extraTab = new PanelExtras();
 	        tabbedPane.addTab("Extras", extraTab);
 	        
 	        //Add the tab pane to this panel.

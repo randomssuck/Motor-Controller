@@ -1,4 +1,4 @@
-package mainApplication;
+package panelController;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-public class LoginConnection extends JPanel {
+import controllerApplication.FileLogins;
+
+public class LoginTCP extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel hostIP;
@@ -26,7 +28,7 @@ public class LoginConnection extends JPanel {
 	private JButton saveBtn;
 	private JComboBox<String> loadComboBox;
 	
-	public LoginConnection() {
+	public LoginTCP() {
 		setBorder(BorderFactory.createTitledBorder("Vehicle"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -65,6 +67,7 @@ public class LoginConnection extends JPanel {
 				String ip = hostField.getText();
 				String inPort = portField.getText();
 				String address = ip + ":" + inPort;
+				new FileLogins(address);
 				int port = 0;
 				int intport;
 				
@@ -154,6 +157,6 @@ public class LoginConnection extends JPanel {
 	}
 	
 	private void displayMessage (String message, int connectionState) {
-		Controls.statusBarUpdate(message, connectionState);
+		MotorControls.statusBarUpdate(message, connectionState);
 	}
 }

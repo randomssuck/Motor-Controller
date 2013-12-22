@@ -1,4 +1,4 @@
-package mainApplication;
+package panelController;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -27,8 +27,8 @@ public class TCPconnection implements Runnable{
 			setupStreams();
 			whileChatting();
 		}catch(EOFException eofException){
-			Controls.sBar.setText("");
-			displayMessage(" [~] Client ended connection", 5);
+			MotorControls.sBar.setText("");
+			TCPmessage(" [~] Client ended connection", 4, true);
 		}catch(IOException ioException){
 		}catch(NullPointerException nullPointerException){
 		}finally{
@@ -38,14 +38,14 @@ public class TCPconnection implements Runnable{
 	
 	private void connectToServer() {
 		try {
-			Controls.sBar.setText("");
-			displayMessage(" [~] Attempting to connect...", 5);
+			MotorControls.sBar.setText("");
+			TCPmessage(" [~] Attempting to connect...", 4, true);
 			connection = new Socket(InetAddress.getByName(serverIP), serverPort);
-			displayMessage("Connected to: " + connection.getInetAddress().getHostName(), 2);
-			LoginConnection.connectedGUIstate(true);
-			Controls.controlsEnabled(true);
+			TCPmessage("Connected to: " + connection.getInetAddress().getHostName(), 2, true);
+			LoginTCP.connectedGUIstate(true);
+			MotorControls.controlsEnabled(true);
 		}catch(IOException ioException){
-			displayMessage("Server not found!", 0);
+			TCPmessage("Server not found!", 0, true);
 		}
 	}
 	
@@ -62,24 +62,25 @@ public class TCPconnection implements Runnable{
 		do {
 			try {
 				message = (String) input.readObject();
-				displayMessage(message, 2);
+				TCPmessage(message, 2, true);
 			}catch(ClassNotFoundException classNotFoundException){
-				displayMessage("Unable to read message", 4);
+				TCPmessage("Unable to read message", 3, false);
 			}
 		}while(!message.equals("SERVER: END"));
 	}
 	
 	public final void cleanUp() {
 		try {
-			displayMessage("Closing sockets...", 1);
+			TCPmessage("Closing sockets...", 1, true);
 			output.close();
 			input.close();
 			connection.close();
-			Controls.controlsEnabled(false);
-			displayMessage("Successfully closed sockets.", 0);
+			MotorControls.controlsEnabled(false);
+			TCPmessage("Successfully closed sockets.", 0, false);
+			TCPmessage("Connection closed", 0, true);
 		}catch(IOException ioException){
 		}catch(NullPointerException nullPointerException){
-			LoginConnection.connectBtn.setSelected(false);
+			LoginTCP.connectBtn.setSelected(false);
 		}
 	}
 	
@@ -91,13 +92,18 @@ public class TCPconnection implements Runnable{
 			}else{
 				output.writeObject("CLIENT: " + message);
 				output.flush();
-				displayMessage("CLIENT: " + message, 2);
+				TCPmessage("CLIENT: " + message, 2, false);
 			}
 		}catch(IOException ioException){
 		}
 	}
 	
-	public static void displayMessage(final String message, int connectionState) {
-		Controls.statusBarUpdate(message, connectionState);
+	public static void TCPmessage(String message, int connectionState, boolean toStatusBar) {
+		if(toStatusBar == true){
+			MotorControls.statusBarUpdate(message, connectionState);
+			System.out.println(" --StatusBAR-- (" + connectionState + ") " + message);
+		}else{
+			System.out.println(message);
+		}
 	}
 }

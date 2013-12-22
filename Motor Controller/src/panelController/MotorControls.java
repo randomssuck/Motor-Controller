@@ -1,4 +1,4 @@
-package mainApplication;
+package panelController;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,12 +8,10 @@ import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.text.DefaultCaret;
 
-public class Controls extends JPanel {
+public class MotorControls extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private static JToggleButton forwardBtn;
@@ -21,9 +19,9 @@ public class Controls extends JPanel {
 	private static JToggleButton rightBtn;
 	private static JToggleButton leftBtn;
 	private static JToggleButton stopBtn;
-	public static JTextArea sBar;
+	public static JTextField sBar;
 	
-	public Controls() {
+	public MotorControls() {
 		setBorder(BorderFactory.createTitledBorder("Motor Controls"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -106,16 +104,16 @@ public class Controls extends JPanel {
 		gc.gridy = 1;
 		add(stopBtn, gc);
 		
-		sBar = new JTextArea();
-		statusBarUpdate("Ready", 5);
-		DefaultCaret caret = (DefaultCaret)sBar.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		sBar = new JTextField();
+		statusBarUpdate("Ready", 4);
+		//DefaultCaret caret = (DefaultCaret)sBar.getCaret();
+		//caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		sBar.setEditable(false);
 		gc.gridx = 0;
 		gc.gridy = 3;
 		gc.gridwidth = 3;
-		gc.ipady = 49;
-		add(new JScrollPane(sBar), gc);
+		gc.ipady = 0;
+		add(sBar, gc);
 		
 		controlsEnabled(false);
 	}
@@ -138,19 +136,20 @@ public class Controls extends JPanel {
 	
 	private void sendCommand(String c) {
 		TCPconnection.sendMessage(c);
+		TCPconnection.TCPmessage(c, 2, true);
 	}
 	
 	public static void statusBarUpdate(String message, int connectionState) {
 		if (connectionState == 0) {
-			sBar.append("\n" + " [X] " + message);
+			sBar.setText("\n" + "[X] " + message);
 		}else if (connectionState == 1) {
-			sBar.append("\n" + " [~] " + message);	
+			sBar.setText("\n" + "[~] " + message);	
 		}else if (connectionState == 2) {
-			sBar.append("\n" + " [O] " + message);
-		}else if (connectionState == 4) {
-			sBar.append("\n" + " [*] " + message);
+			sBar.setText("\n" + "[O] " + message);
+		}else if (connectionState == 3) {
+			sBar.setText("\n" + "[#] " + message);
 		}else{
-			sBar.append(message);
+			sBar.setText(message);
 		}
 	}
 }

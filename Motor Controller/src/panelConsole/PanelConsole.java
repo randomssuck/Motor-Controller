@@ -1,4 +1,4 @@
-package mainApplication;
+package panelConsole;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,13 +10,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ConsoleTab extends JPanel {
+public class PanelConsole extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	public static JTextArea consoleArea;
 	private JTextField userInput;
 	
-	public ConsoleTab() {
+	public PanelConsole() {
 		setBorder(BorderFactory.createTitledBorder("Console"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
