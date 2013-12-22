@@ -47,4 +47,5 @@ public class PanelConsole extends JPanel {
 	    gc.weighty = 1.0;
 		add(userInput, gc);
 	}
+	hello
 }
