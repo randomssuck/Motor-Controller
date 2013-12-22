@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-public class VehicalLogin extends JPanel {
+public class LoginConnection extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel hostIP;
@@ -26,7 +26,7 @@ public class VehicalLogin extends JPanel {
 	private JButton saveBtn;
 	private JComboBox<String> loadComboBox;
 	
-	public VehicalLogin() {
+	public LoginConnection() {
 		setBorder(BorderFactory.createTitledBorder("Vehicle"));
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();

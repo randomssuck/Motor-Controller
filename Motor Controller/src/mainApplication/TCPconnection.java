@@ -42,7 +42,7 @@ public class TCPconnection implements Runnable{
 			displayMessage(" [~] Attempting to connect...", 5);
 			connection = new Socket(InetAddress.getByName(serverIP), serverPort);
 			displayMessage("Connected to: " + connection.getInetAddress().getHostName(), 2);
-			VehicalLogin.connectedGUIstate(true);
+			LoginConnection.connectedGUIstate(true);
 			Controls.controlsEnabled(true);
 		}catch(IOException ioException){
 			displayMessage("Server not found!", 0);
@@ -79,7 +79,7 @@ public class TCPconnection implements Runnable{
 			displayMessage("Successfully closed sockets.", 0);
 		}catch(IOException ioException){
 		}catch(NullPointerException nullPointerException){
-			VehicalLogin.connectBtn.setSelected(false);
+			LoginConnection.connectBtn.setSelected(false);
 		}
 	}
 	
@@ -94,12 +94,10 @@ public class TCPconnection implements Runnable{
 				displayMessage("CLIENT: " + message, 2);
 			}
 		}catch(IOException ioException){
-			//displayMessage("Failed to send!", 4);
 		}
 	}
 	
 	public static void displayMessage(final String message, int connectionState) {
-		System.out.println(message);
 		Controls.statusBarUpdate(message, connectionState);
 	}
 }

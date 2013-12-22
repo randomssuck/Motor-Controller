@@ -8,14 +8,14 @@ import javax.swing.JPanel;
 public class ControllerTab extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	VehicalLogin vLogin;
+	LoginConnection vLogin;
 	Controls controls;
 	
 	public ControllerTab() {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		
-		vLogin = new VehicalLogin();
+		vLogin = new LoginConnection();
 		gc.anchor = GridBagConstraints.NORTH;
 		gc.gridy = 0;
 		add(vLogin, gc);
