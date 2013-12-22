@@ -15,6 +15,7 @@ public class TCPconnection implements Runnable{
 	private static Socket connection;
 	private static ObjectOutputStream output;
 	private static ObjectInputStream input;
+	private static boolean connected;
 	
 	public TCPconnection(String ip, int port) {
 		
@@ -41,16 +42,27 @@ public class TCPconnection implements Runnable{
 			displayMessage("Attempting to connect...\n");
 			connection = new Socket(InetAddress.getByName(serverIP), serverPort);
 			displayMessage("Connected to: " + connection.getInetAddress().getHostName());
+			VehicalLogin.connectedGUIstate(true);
 		}catch(IOException ioException){
+			setConnected(false);
 			displayMessage("Server not found!");
 		}
 	}
 	
+	public static boolean isConnected() {
+		return connected;
+	}
+
+	public static void setConnected(boolean connected) {
+		TCPconnection.connected = connected;
+	}
+
 	private void setupStreams() {
 		try {
 			output = new ObjectOutputStream(connection.getOutputStream());
 			output.flush();
 			input = new ObjectInputStream(connection.getInputStream());
+			setConnected(true);
 			displayMessage("Streams are created\n");
 		}catch(IOException ioException){
 			displayMessage("Server not found!");
